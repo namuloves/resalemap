@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { MapPin } from 'lucide-react';
 import { fetchLocations } from './locationData';
-import mapboxgl from 'mapbox-gl';
+import * as mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoid2F0ZXJmYWlyeSIsImEiOiJjbTQ3Z3QzeG0wNWd6Mm1wc3lsanZvaXQzIn0.N9XcupyXEwtQYGC50FCTng';
