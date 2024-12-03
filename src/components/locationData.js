@@ -25,6 +25,8 @@ export async function fetchLocations() {
           website: columns[9] || '',
           acceptancePolicy: columns[10] || ''
         };
+        console.log('Parsed location:', location); // Add this
+        return location;
       });
     } catch (error) {
       console.error('Error fetching locations:', error);
