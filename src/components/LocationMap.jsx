@@ -36,6 +36,13 @@ const LocationMap = () => {
         const data = await fetchLocations();
         console.log('Loaded locations:', data);
         setLocations(data);
+
+        // debug logs //
+        console.log('All locations:', data);
+        console.log('Types:', [...new Set(data.map(loc => loc.type))]);
+        console.log('Thrift stores:', data.filter(loc => loc.type.toLowerCase() === 'thrift').length);
+        console.log('Goodwill:', data.filter(loc => loc.type.toLowerCase() === 'goodwill').length);
+
       } catch (error) {
         console.error('Error loading locations:', error);
       } finally {
@@ -174,26 +181,6 @@ const LocationMap = () => {
       
       newMarkers.push(marker);
     });
-
-    // Fetch locations from Google Sheets
-useEffect(() => {
-  async function loadLocations() {
-    try {
-      const data = await fetchLocations();
-      // Debug logs
-      console.log('All locations:', data);
-      console.log('Types present:', [...new Set(data.map(loc => loc.type))]);
-      console.log('Thrift stores:', data.filter(loc => loc.type.toLowerCase() === 'thrift').length);
-      console.log('Goodwill locations:', data.filter(loc => loc.type.toLowerCase() === 'goodwill').length);
-      setLocations(data);
-    } catch (error) {
-      console.error('Error loading locations:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
-  loadLocations();
-}, []);
 
     // Fit bounds to show all markers
     if (newMarkers.length > 0) {
