@@ -25,6 +25,7 @@ function getPolicyBadge(policy) {
     both: '<span class="bg-purple-100 text-purple-800 px-2 py-1 rounded">Accepts Donations & Buys</span>',
     neither: '<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded">No Donation or Buying</span>'
   };
+  console.log('Policy value:', policy);
   return badges[policy] || '';
 }
 
