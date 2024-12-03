@@ -22,7 +22,8 @@ export async function fetchLocations() {
           zip: columns[6],
           lat: parseFloat(columns[7]),
           lng: parseFloat(columns[8]),
-          website: columns[9] || ''
+          website: columns[9] || '',
+          acceptancePolicy: columns[10] || ''
         };
       });
     } catch (error) {
