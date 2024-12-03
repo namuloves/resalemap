@@ -238,7 +238,7 @@ const LocationMap = () => {
 
       <div className="flex-1 relative">
         <div className="absolute bottom-4 right-4 z-10 bg-white p-4 rounded shadow-md">
-          <h3 className="font-bold mb-2">Category</h3>
+          <h3 className="font-heading font-bold mb-2">Category</h3>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <MapPin className="text-blue-500" size={16} />
@@ -264,7 +264,7 @@ const LocationMap = () => {
                   <MapPin className={`${getMarkerColor(location.type)}`} size={24} />
                   <div>
                     <h4 className="font-semibold">{location.name}</h4>
-                    <p className="text-sm text-gray-600">
+                    <p className="font-body text-sm">
                       {location.address}, {location.city}, {location.state} {location.zip}
                     </p>
                     {location.website && (
