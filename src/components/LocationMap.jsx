@@ -178,16 +178,16 @@ const LocationMap = () => {
       async function loadLocations() {
         try {
         const data = await fetchLocations();
-        console.log('Loaded locations:', data);
+          console.log('Loaded locations:', data);
       // Add these debug logs
-      console.log('Types present:', [...new Set(data.map(loc => loc.type))]);
-      console.log('Thrift stores:', data.filter(loc => loc.type.toLowerCase() === 'thrift'));
-      console.log('Goodwill locations:', data.filter(loc => loc.type.toLowerCase() === 'goodwill'));
-      setLocations(data);
-    } catch (error) {
-      console.error('Error loading locations:', error);
-    } finally {
-      setLoading(false);
+        console.log('Types present:', [...new Set(data.map(loc => loc.type))]);
+        console.log('Thrift stores:', data.filter(loc => loc.type.toLowerCase() === 'thrift'));
+        console.log('Goodwill locations:', data.filter(loc => loc.type.toLowerCase() === 'goodwill'));
+        setLocations(data);
+      } catch (error) {
+        console.error('Error loading locations:', error);
+      } finally {
+        setLoading(false);
     }
   }
   loadLocations();
