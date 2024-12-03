@@ -12,7 +12,7 @@ export async function fetchLocations() {
       return rows.slice(1).map(row => {
         const columns = row.split(',').map(col => col.trim());
         
-        return {
+        const parsedLocation = {
           id: columns[0],
           type: columns[1].toLowerCase(),
           name: columns[2],
@@ -25,8 +25,8 @@ export async function fetchLocations() {
           website: columns[9] || '',
           acceptancePolicy: columns[10] || ''
         };
-        console.log('Parsed location:', location); // Add this
-        return location;
+        console.log('Parsed location:', parsedLocation);
+        return parsedLocation;
       });
     } catch (error) {
       console.error('Error fetching locations:', error);
