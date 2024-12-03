@@ -166,6 +166,9 @@ const LocationMap = () => {
       .setPopup(new mapboxgl.Popup().setHTML(
         `<h3 class="font-bold">${location.name}</h3>
          <p>${location.address}, ${location.city}, ${location.state} ${location.zip}</p>
+         <p class="text-sm mt-1">
+          ${getPolicyBadge(location.acceptancePolicy)}
+         </p>
          ${location.website ? `<a href="${location.website}" target="_blank" class="text-blue-500">Website</a>` : ''}`
       ))
       .addTo(map);
