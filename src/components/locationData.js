@@ -4,7 +4,7 @@ export async function fetchLocations() {
     try {
       const response = await fetch(SHEET_URL);
       const csvText = await response.text();
-      
+      console.log('Raw CSV data:', csvText);
       // Split into rows and remove empty rows
       const rows = csvText.split('\n').filter(row => row.trim());
       
@@ -14,7 +14,7 @@ export async function fetchLocations() {
         
         return {
           id: columns[0],
-          type: columns[1],
+          type: columns[1].toLowerCase(),
           name: columns[2],
           address: columns[3],
           city: columns[4],
