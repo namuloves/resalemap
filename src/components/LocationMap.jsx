@@ -135,15 +135,6 @@ const LocationMap = () => {
       });
 
       mapInstance.on('load', () => {
-        const geocoder = new MapboxGeocoder({
-          accessToken: mapboxgl.accessToken,
-          mapboxgl: mapboxgl,
-          marker: false,
-          placeholder: 'Search for an address',
-          bbox: [-74.04, 40.61, -73.85, 40.78] // Restrict to Brooklyn area
-        });
-
-        mapInstance.addControl(geocoder);
         mapInstance.addControl(new mapboxgl.NavigationControl());
         setMap(mapInstance);
       });
