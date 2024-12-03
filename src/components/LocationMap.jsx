@@ -18,6 +18,16 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   return R * c; // Distance in miles
 }
 
+function getPolicyBadge(policy) {
+  const badges = {
+    donation_only: '<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Accepts Donations Only</span>',
+    buy_only: '<span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">Buys From Consumers</span>',
+    both: '<span class="bg-purple-100 text-purple-800 px-2 py-1 rounded">Accepts Donations & Buys</span>',
+    neither: '<span class="bg-gray-100 text-gray-800 px-2 py-1 rounded">No Donation or Buying</span>'
+  };
+  return badges[policy] || '';
+}
+
 const LocationMap = () => {
   const [selectedType, setSelectedType] = useState('all');
   const [map, setMap] = useState(null);
