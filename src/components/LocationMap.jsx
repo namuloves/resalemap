@@ -281,7 +281,7 @@ const LocationMap = () => {
 
         <div className="absolute left-4 top-4 z-10 bg-white p-4 rounded shadow-md w-72">
           <h3 className="font-bold mb-2">Locations ({filteredLocations.length})</h3>
-          <div className="space-y-3 max-h-[60vh] overflow-y-auto">
+          <div className="space-y-3">
             {currentLocations.map(location => (
               <div key={location.id} className="border-b pb-2">
                 <div className="flex items-start gap-2">
