@@ -225,7 +225,9 @@ const LocationMap = () => {
             All Locations
           </button>
           <button 
-            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
+            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${
+    selectedType === 'bin' ? 'bg-gray-200' : 'bg-white'
+  }`}
             onClick={() => {
               setSelectedType('bin');
               setCurrentPage(1);
@@ -234,7 +236,7 @@ const LocationMap = () => {
             Donation Bins
           </button>
           <button 
-            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
+            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'goodwill' ? 'bg-gray-200' : 'bg-white'}`}
             onClick={() => {
               setSelectedType('goodwill');
               setCurrentPage(1);
@@ -243,7 +245,7 @@ const LocationMap = () => {
             Goodwill
           </button>
           <button 
-            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
+            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'thrift' ? 'bg-gray-200' : 'bg-white'}`}
             onClick={() => {
               setSelectedType('thrift');
               setCurrentPage(1);
