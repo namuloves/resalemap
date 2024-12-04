@@ -1,6 +1,7 @@
 @import 'mapbox-gl/dist/mapbox-gl.css';
 @import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap');
+/* Update Inter import to use variable font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,11 +9,18 @@
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Add this more specific selector for the header buttons */
+.fixed-header button {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  letter-spacing: -0.01em !important;
 }
 
 code {
