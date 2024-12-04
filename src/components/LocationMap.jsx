@@ -217,7 +217,7 @@ const LocationMap = () => {
     <div className="bg-white h-[60px] flex items-center justify-center">
       <h1 className="font-inter text-[18px] font-semibold">RECYCLE BABY</h1>
     </div>
-      <div className="p-4 bg-white shadow-md">
+      <div className="p-4 bg-white shadow-md h-[40px]">
         <div className="flex gap-4 items-center">
           <button 
             className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
