@@ -216,7 +216,7 @@ const LocationMap = () => {
       <div className="p-4 bg-white shadow-md">
         <div className="flex gap-4 items-center">
           <button 
-            className={`px-4 py-2 rounded ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
+            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
             onClick={() => {
               setSelectedType('all');
               setCurrentPage(1);
@@ -225,7 +225,7 @@ const LocationMap = () => {
             All Locations
           </button>
           <button 
-            className={`px-4 py-2 rounded ${selectedType === 'bin' ? 'bg-gray-200' : 'bg-white'}`}
+            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
             onClick={() => {
               setSelectedType('bin');
               setCurrentPage(1);
@@ -234,7 +234,7 @@ const LocationMap = () => {
             Donation Bins
           </button>
           <button 
-            className={`px-4 py-2 rounded ${selectedType === 'goodwill' ? 'bg-gray-200' : 'bg-white'}`}
+            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
             onClick={() => {
               setSelectedType('goodwill');
               setCurrentPage(1);
@@ -243,7 +243,7 @@ const LocationMap = () => {
             Goodwill
           </button>
           <button 
-            className={`px-4 py-2 rounded ${selectedType === 'thrift' ? 'bg-gray-200' : 'bg-white'}`}
+            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
             onClick={() => {
               setSelectedType('thrift');
               setCurrentPage(1);
@@ -252,7 +252,7 @@ const LocationMap = () => {
             Thrift Stores
           </button>
           <button 
-            className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600"
+            className="px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] bg-blue-500 text-white hover:bg-blue-600"
             onClick={findNearestLocation}
           >
             Find Nearest Location

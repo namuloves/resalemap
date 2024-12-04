@@ -17,10 +17,11 @@ body {
 }
 
 /* Add this more specific selector for the header buttons */
-.fixed-header button {
-  font-family: 'Inter', sans-serif !important;
-  font-size: 14px !important;
-  letter-spacing: -0.01em !important;
+/* In index.css, replace the .fixed-header section with: */
+.w-full.h-screen .fixed-header button {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  letter-spacing: -0.01em;
 }
 
 code {
