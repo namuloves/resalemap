@@ -283,7 +283,7 @@ const LocationMap = () => {
           <h3 className="font-bold mb-2">Locations ({filteredLocations.length})</h3>
           <div className="space-y-3">
             {currentLocations.map(location => (
-              <div key={location.id} className="border-b pb-2">
+              <div key={location.id} className="pb-2">
                 <div className="flex items-start gap-2">
                   <MapPin className={getMarkerColor(location.type)} size={24} />
                   <div>
