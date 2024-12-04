@@ -169,6 +169,10 @@ const LocationMap = () => {
     const newMarkers = [];
 
     filteredLocations.forEach(location => {
+      if (isNaN(location.lat) || isNaN(location.lng)) {
+        console.warn(`Invalid coordinates for location: ${location.name}`);
+        return; // Skip this location
+      }
       const marker = new mapboxgl.Marker({
         color: location.type.toLowerCase() === 'bin' ? '#3B82F6' : 
                location.type.toLowerCase() === 'goodwill' ? '#22C55E' : '#EF4444'
