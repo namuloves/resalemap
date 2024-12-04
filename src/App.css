@@ -60,3 +60,13 @@
   min-height: 100vh;
   overflow: hidden;
 }
+
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background-color: white;
+}
