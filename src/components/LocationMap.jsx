@@ -212,7 +212,11 @@ const LocationMap = () => {
   }
 
   return (
-    <div className="w-full h-screen flex flex-col">
+    
+    <div className="w-full h-screen flex flex-col"> 
+    <div className="bg-white h-10 flex items-center justify-center border-b">
+      <h1 className="font-inter text-[18px] font-semibold">RECYCLE BABY</h1>
+    </div>
       <div className="p-4 bg-white shadow-md">
         <div className="flex gap-4 items-center">
           <button 
