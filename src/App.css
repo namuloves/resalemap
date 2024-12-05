@@ -75,7 +75,6 @@
 
 .w-full.h-screen.flex.flex-col {
   min-height: 100vh;
-  overflow: hidden;
 }
 
 .bg-white.h-60 {

@@ -41,7 +41,7 @@ const LocationMap = () => {
   const [selectedLocation, setSelectedLocation] = useState(null);
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const locationsPerPage = 6;
+  const locationsPerPage = 4;
 
   useEffect(() => {
     async function loadLocations() {
