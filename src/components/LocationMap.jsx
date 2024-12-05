@@ -214,11 +214,11 @@ const LocationMap = () => {
   return (
     
     <div className="w-full h-screen flex flex-col"> 
-    <div className="bg-white h-[60px] flex items-center justify-center">
+    <div className="bg-white h-[60px] flex items-center justify-center border-b border-[#f2f2f2]">
       <h1 className="font-inter text-[18px] font-semibold">RECYCLE BABY</h1>
     </div>
-      <div className="p-4 bg-white shadow-md h-[40px]">
-        <div className="flex gap-4 items-center">
+      <div className="py-2 p-4 bg-white shadow-sm min-h-[40px]">
+        <div className="flex flex gap-4 items-center">
           <button 
             className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
             onClick={() => {
