@@ -1,6 +1,6 @@
 /* Base styles */
 .App {
-  text-align: center;
+  text-align: left;  /* Changed from center to maintain list alignment */
 }
 
 /* App specific styles */
@@ -8,6 +8,7 @@
   height: 40vmin;
   pointer-events: none;
 }
+
 
 .App-header {
   background-color: #282c34;
@@ -43,13 +44,18 @@
   width: 100%;
 }
 
+/* Header styles */
 .fixed-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 0px;
   right: 0;
-  z-index: 20;
+  z-index: 1001;
   background-color: white;
+  padding: 0 1rem;
 }
 
 .fixed-header button {
@@ -57,6 +63,7 @@
   font-size: 14px;
   letter-spacing: -0.01em;
 }
+
 
 /* Container styles */
 .responsive-container {
@@ -71,40 +78,48 @@
   overflow: hidden;
 }
 
-/* Animations */
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.bg-white.h-60 {
+  display: block; 
+  height: 60px; /* Set a specific height */
+  width: 100%; /* Set a width if necessary */
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1001;
+  background-color: white;
+}
+
+.py-2.p-4.bg-white {
+  position: relative;
+  z-index: 20;
+}
+
+/* Location list styles */
+.location-list {
+  text-align: left;  /* Ensure list items are left-aligned */
 }
 
 /* Media Queries */
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-/* Mobile Styles */
 @media screen and (max-width: 640px) {
-  .mobile-only {
-    display: block;
-  }
-  
-  .desktop-only,
   .category-legend,
   .location-list {
-    display: none;
+    display: none !important;
   }
-  
+  .fixed-header h1 {
+    font-size: 16px; 
+  }
+  .fixed-heaader .font-inter {
+    font-size: 12px; 
+  }
+  .font-inter button {
+    font-size: 12px; 
+  }
+
   .map-container {
     height: calc(100vh - 100px) !important;
     width: 100%;
   }
-  
+
   .location-popup {
     display: block;
     position: fixed;
@@ -123,14 +138,7 @@
 
 /* Desktop Styles */
 @media screen and (min-width: 641px) {
-  .mobile-only {
-    display: none;
-  }
-  
-  .desktop-only {
-    display: block;
-  }
-  
+  .category-legend,
   .location-popup {
     display: none;
   }
@@ -143,4 +151,13 @@
 
 .location-popup.active {
   display: block;
+}
+
+.flex-1 {
+  margin-top: 60px; /* Adjust this value to match the height of the fixed header */
+}
+
+.px-4 {
+  padding-left: 0.5rem; /* Adjust as needed */
+  padding-right: 0.5rem; /* Adjust as needed */
 }

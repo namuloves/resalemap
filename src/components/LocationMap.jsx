@@ -210,153 +210,157 @@ const LocationMap = () => {
     };
   }, [map, locations, selectedType]);
 
-  if (loading) {
-    return <div className="w-full h-screen flex items-center justify-center">Loading locations...</div>;
-  }
-
   return (
-    
-    <div className="w-full h-screen flex flex-col"> 
-    <div className="bg-white h-[60px] flex items-center justify-center border-b border-[#f2f2f2]">
-      <h1 className="font-inter text-[18px] font-semibold">RECYCLE BABY</h1>
-    </div>
-      <div className="py-2 p-4 bg-white shadow-sm min-h-[40px]">
-        <div className="flex flex gap-4 items-center">
-          <button 
-            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
-            onClick={() => {
-              setSelectedType('all');
-              setCurrentPage(1);
-            }}
-          >
-            All Locations
-          </button>
-          <button 
-            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${
-    selectedType === 'bin' ? 'bg-gray-200' : 'bg-white'
-  }`}
-            onClick={() => {
-              setSelectedType('bin');
-              setCurrentPage(1);
-            }}
-          >
-            Donation Bins
-          </button>
-          <button 
-            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'goodwill' ? 'bg-gray-200' : 'bg-white'}`}
-            onClick={() => {
-              setSelectedType('goodwill');
-              setCurrentPage(1);
-            }}
-          >
-            Goodwill
-          </button>
-          <button 
-            className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'thrift' ? 'bg-gray-200' : 'bg-white'}`}
-            onClick={() => {
-              setSelectedType('thrift');
-              setCurrentPage(1);
-            }}
-          >
-            Thrift Stores
-          </button>
-          <button 
-            className="px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] bg-blue-500 text-white hover:bg-blue-600"
-            onClick={findNearestLocation}
-          >
-            Find Nearest Location
-          </button>
-        </div>
+    <div className="w-full h-screen flex flex-col">
+      <div className="fixed-header h-[60px] flex items-center justify-center border-b border-[#f2f2f2]">
+        <h1 className="font-inter text-[18px] font-semibold">RECYCLE BABY</h1>
       </div>
 
-      <div className="flex-1 relative">
-        <div className="absolute bottom-4 right-4 z-10 bg-white p-4 rounded shadow-md category-legend">
-          <h3 className="font-heading font-bold mb-2">Category</h3>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <MapPin className="text-blue-500" size={16} />
-              <span>Donation Bins</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="text-green-500" size={16} />
-              <span>Goodwill</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="text-red-500" size={16} />
-              <span>Thrift Stores</span>
+      {loading ? (
+        <div className="flex-1 flex items-center justify-center">
+          Loading locations...
+        </div>
+      ) : (
+        <div className="flex-1 relative">
+          <div className="py-2 p-4 bg-white shadow-sm min-h-[40px]">
+            <div className="flex flex gap-4 items-center">
+              <button 
+                className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
+                onClick={() => {
+                  setSelectedType('all');
+                  setCurrentPage(1);
+                }}
+              >
+                All
+              </button>
+              <button 
+                className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${
+      selectedType === 'bin' ? 'bg-gray-200' : 'bg-white'
+    }`}
+                onClick={() => {
+                  setSelectedType('bin');
+                  setCurrentPage(1);
+                }}
+              >
+                Donation Bins
+              </button>
+              <button 
+                className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'goodwill' ? 'bg-gray-200' : 'bg-white'}`}
+                onClick={() => {
+                  setSelectedType('goodwill');
+                  setCurrentPage(1);
+                }}
+              >
+                Goodwill
+              </button>
+              <button 
+                className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'thrift' ? 'bg-gray-200' : 'bg-white'}`}
+                onClick={() => {
+                  setSelectedType('thrift');
+                  setCurrentPage(1);
+                }}
+              >
+                Thrift Stores
+              </button>
+              <button 
+                className="px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] bg-blue-500 text-white hover:bg-blue-600"
+                onClick={findNearestLocation}
+              >
+                Find Nearest Location
+              </button>
             </div>
           </div>
-        </div>
 
-        <div className="absolute left-4 top-4 z-10 bg-white p-4 rounded shadow-md w-72 location-list">
-          <h3 className="font-bold mb-2">Locations ({filteredLocations.length})</h3>
-          <div className="space-y-3">
-            {currentLocations.map(location => (
-              <div key={location.id} className="pb-2">
+          <div className="flex-1 relative">
+            <div className="absolute bottom-4 right-4 z-10 bg-white p-4 rounded shadow-md category-legend">
+              <h3 className="font-heading font-bold mb-2">Category</h3>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <MapPin className="text-blue-500" size={16} />
+                  <span>Donation Bins</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin className="text-green-500" size={16} />
+                  <span>Goodwill</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <MapPin className="text-red-500" size={16} />
+                  <span>Thrift Stores</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="absolute left-4 top-4 z-10 bg-white p-4 rounded shadow-md w-72 location-list">
+              <h3 className="font-bold mb-2">Locations ({filteredLocations.length})</h3>
+              <div className="space-y-3">
+                {currentLocations.map(location => (
+                  <div key={location.id} className="pb-2">
+                    <div className="flex items-start gap-2">
+                      <MapPin className={getMarkerColor(location.type)} size={24} />
+                      <div>
+                        <h4 className="font-semibold">{location.name}</h4>
+                        <p className="font-body text-sm">
+                          {location.address}, {location.city}, {location.state} {location.zip}
+                        </p>
+                        {location.website && (
+                          <a 
+                            href={location.website} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="text-sm text-blue-500 hover:underline"
+                          >
+                            Website
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-4 flex items-center justify-between border-t pt-4">
+                <button
+                  onClick={() => paginate(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className={`p-2 rounded ${currentPage === 1 ? 'text-gray-400' : 'text-gray-700 hover:bg-gray-100'}`}
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <div className="text-sm">
+                  Page {currentPage} of {totalPages}
+                </div>
+                <button
+                  onClick={() => paginate(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className={`p-2 rounded ${currentPage === totalPages ? 'text-gray-400' : 'text-gray-700 hover:bg-gray-100'}`}
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+            </div>
+
+            {nearestLocation && (
+              <div className="absolute left-4 bottom-4 z-10 bg-white p-4 rounded shadow-md w-72">
+                <h3 className="font-bold mb-2">Nearest Location</h3>
                 <div className="flex items-start gap-2">
-                  <MapPin className={getMarkerColor(location.type)} size={24} />
+                  <MapPin className={getMarkerColor(nearestLocation.type)} size={24} />
                   <div>
-                    <h4 className="font-semibold">{location.name}</h4>
-                    <p className="font-body text-sm">
-                      {location.address}, {location.city}, {location.state} {location.zip}
+                    <h4 className="font-semibold">{nearestLocation.name}</h4>
+                    <p className="text-sm text-gray-600">
+                      {nearestLocation.address}, {nearestLocation.city}, {nearestLocation.state} {nearestLocation.zip}
                     </p>
-                    {location.website && (
-                      <a 
-                        href={location.website} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-sm text-blue-500 hover:underline"
-                      >
-                        Website
-                      </a>
-                    )}
+                    <p className="text-sm text-blue-600 mt-1">
+                      {nearestLocation.distance} miles away
+                    </p>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            )}
 
-          <div className="mt-4 flex items-center justify-between border-t pt-4">
-            <button
-              onClick={() => paginate(currentPage - 1)}
-              disabled={currentPage === 1}
-              className={`p-2 rounded ${currentPage === 1 ? 'text-gray-400' : 'text-gray-700 hover:bg-gray-100'}`}
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <div className="text-sm">
-              Page {currentPage} of {totalPages}
-            </div>
-            <button
-              onClick={() => paginate(currentPage + 1)}
-              disabled={currentPage === totalPages}
-              className={`p-2 rounded ${currentPage === totalPages ? 'text-gray-400' : 'text-gray-700 hover:bg-gray-100'}`}
-            >
-              <ChevronRight size={20} />
-            </button>
+            <div ref={mapContainer} className="w-full h-full map-container" />
           </div>
         </div>
-
-        {nearestLocation && (
-          <div className="absolute left-4 bottom-4 z-10 bg-white p-4 rounded shadow-md w-72">
-            <h3 className="font-bold mb-2">Nearest Location</h3>
-            <div className="flex items-start gap-2">
-              <MapPin className={getMarkerColor(nearestLocation.type)} size={24} />
-              <div>
-                <h4 className="font-semibold">{nearestLocation.name}</h4>
-                <p className="text-sm text-gray-600">
-                  {nearestLocation.address}, {nearestLocation.city}, {nearestLocation.state} {nearestLocation.zip}
-                </p>
-                <p className="text-sm text-blue-600 mt-1">
-                  {nearestLocation.distance} miles away
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div ref={mapContainer} className="w-full h-full map-container" />
-      </div>
+      )}
     </div>
   );
 };

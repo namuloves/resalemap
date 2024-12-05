@@ -2,6 +2,7 @@
 @import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 /* Update Inter import to use variable font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import './App.css';
 
 @tailwind base;
 @tailwind components;
@@ -17,11 +18,10 @@ body {
 }
 
 /* Add this more specific selector for the header buttons */
-/* In index.css, replace the .fixed-header section with: */
-.w-full.h-screen .fixed-header button {
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  letter-spacing: -0.01em;
+.fixed-header button {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 14px !important;
+  letter-spacing: -0.01em !important;
 }
 
 code {
