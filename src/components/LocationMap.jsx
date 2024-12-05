@@ -38,7 +38,7 @@ const LocationMap = () => {
   const [userLocation, setUserLocation] = useState(null);
   const [nearestLocation, setNearestLocation] = useState(null);
   const userMarkerRef = useRef(null);
-  
+  const [selectedLocation, setSelectedLocation] = useState(null);
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const locationsPerPage = 6;
@@ -175,6 +175,9 @@ const LocationMap = () => {
                location.type.toLowerCase() === 'goodwill' ? '#22C55E' : '#EF4444'
       })
       .setLngLat([location.lng, location.lat])
+      .on('click', () => {
+        setSelectedLocation(location); // For mobile popup
+      })
       .setPopup(new mapboxgl.Popup().setHTML(
         `<h3 class="font-bold">${location.name}</h3>
          <p>${location.address}, ${location.city}, ${location.state} ${location.zip}</p>
@@ -267,7 +270,7 @@ const LocationMap = () => {
       </div>
 
       <div className="flex-1 relative">
-        <div className="absolute bottom-4 right-4 z-10 bg-white p-4 rounded shadow-md">
+        <div className="absolute bottom-4 right-4 z-10 bg-white p-4 rounded shadow-md category-legend">
           <h3 className="font-heading font-bold mb-2">Category</h3>
           <div className="space-y-2">
             <div className="flex items-center gap-2">
@@ -285,7 +288,7 @@ const LocationMap = () => {
           </div>
         </div>
 
-        <div className="absolute left-4 top-4 z-10 bg-white p-4 rounded shadow-md w-72">
+        <div className="absolute left-4 top-4 z-10 bg-white p-4 rounded shadow-md w-72 location-list">
           <h3 className="font-bold mb-2">Locations ({filteredLocations.length})</h3>
           <div className="space-y-3">
             {currentLocations.map(location => (

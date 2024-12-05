@@ -51,10 +51,11 @@
   z-index: 20;
   background-color: white;
 }
+
 .fixed-header button {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter Variable', system-ui, -apple-system, sans-serif;
   font-size: 14px;
-  letter-spacing: -0.01em;  /* -1% letter spacing */
+  letter-spacing: -0.01em;
 }
 
 /* Container styles */
@@ -87,20 +88,40 @@
   }
 }
 
+/* Mobile Styles */
 @media screen and (max-width: 640px) {
   .mobile-only {
     display: block;
   }
   
-  .desktop-only {
+  .desktop-only,
+  .category-legend,
+  .location-list {
     display: none;
   }
-
+  
   .map-container {
-    height: calc(100vh - 60px) !important;
+    height: calc(100vh - 100px) !important;
+    width: 100%;
+  }
+  
+  .location-popup {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 16px;
+    padding-bottom: env(safe-area-inset-bottom);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
   }
 }
 
+/* Desktop Styles */
 @media screen and (min-width: 641px) {
   .mobile-only {
     display: none;
@@ -109,4 +130,17 @@
   .desktop-only {
     display: block;
   }
+  
+  .location-popup {
+    display: none;
+  }
+}
+
+/* Location Popup */
+.location-popup {
+  display: none;
+}
+
+.location-popup.active {
+  display: block;
 }
