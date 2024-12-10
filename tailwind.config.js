@@ -6,9 +6,9 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        heading: ['Nunito', 'sans-serif'],
-        body: ['Nunito', 'sans-serif'],
+        sans: ['Univers', 'inter', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['Univers', 'sans-serif'],
+        body: ['Univers', 'sans-serif'],
       },
     },
   },

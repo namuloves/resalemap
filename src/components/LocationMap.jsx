@@ -3,9 +3,10 @@ import { MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
 import { fetchLocations } from './locationData';
 import * as mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import StatsLoadingScreen from './StatsLoadingScreen';
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoid2F0ZXJmYWlyeSIsImEiOiJjbTQ3Z3QzeG0wNWd6Mm1wc3lsanZvaXQzIn0.N9XcupyXEwtQYGC50FCTng';
-
+/* 1. Helper Function */
 function calculateDistance(lat1, lon1, lat2, lon2) {
   const R = 3959; // Earth's radius in miles
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -17,7 +18,6 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   return R * c; // Distance in miles
 }
-
 function getPolicyBadge(policy) {
   const badges = {
     donation_only: '<span class="bg-green-100 text-green-800 px-2 py-1 rounded">Accepts Donations Only</span>',
@@ -27,7 +27,7 @@ function getPolicyBadge(policy) {
   };
   return badges[policy] || '';
 }
-
+/* 2. Main Component */
 const LocationMap = () => {
   const [selectedType, setSelectedType] = useState('all');
   const [map, setMap] = useState(null);
@@ -43,45 +43,46 @@ const LocationMap = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const locationsPerPage = 4;
 
-  useEffect(() => {
-    async function loadLocations() {
-      try {
-        const data = await fetchLocations();
-        console.log('Loaded locations:', data);
-        setLocations(data);
-      } catch (error) {
-        console.error('Error loading locations:', error);
-      } finally {
-        setLoading(false);
-      }
+/* 3. Use Effect */
+useEffect(() => {
+  async function loadLocations() {
+    try {
+      const data = await fetchLocations();
+      console.log('Loaded locations:', data);
+      setLocations(data);
+    } catch (error) {
+      console.error('Error loading locations:', error);
+    } finally {
+      setLoading(false);
     }
-    loadLocations();
-  }, []);
+  }
+  loadLocations();
+}, []);
 
-  const filteredLocations = selectedType === 'all' 
-    ? locations 
-    : locations.filter(loc => loc.type.toLowerCase() === selectedType.toLowerCase());
+const filteredLocations = selectedType === 'all' 
+  ? locations 
+  : locations.filter(loc => loc.type.toLowerCase() === selectedType.toLowerCase());
 
-  // Calculate pagination values
-  const indexOfLastLocation = currentPage * locationsPerPage;
-  const indexOfFirstLocation = indexOfLastLocation - locationsPerPage;
-  const currentLocations = filteredLocations.slice(indexOfFirstLocation, indexOfLastLocation);
-  const totalPages = Math.ceil(filteredLocations.length / locationsPerPage);
+// Calculate pagination values
+const indexOfLastLocation = currentPage * locationsPerPage;
+const indexOfFirstLocation = indexOfLastLocation - locationsPerPage;
+const currentLocations = filteredLocations.slice(indexOfFirstLocation, indexOfLastLocation);
+const totalPages = Math.ceil(filteredLocations.length / locationsPerPage);
 
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
+const paginate = (pageNumber) => {
+  setCurrentPage(pageNumber);
+};
 
-  const getMarkerColor = (type) => {
-    switch(type.toLowerCase()) {
-      case 'bin': return 'text-blue-500';
-      case 'goodwill': return 'text-green-500';
-      case 'thrift': return 'text-red-500';
-      default: return 'text-gray-500';
-    }
-  };
+const getMarkerColor = (type) => {
+  switch(type.toLowerCase()) {
+    case 'bin': return 'text-blue-500';
+    case 'goodwill': return 'text-green-500';
+    case 'thrift': return 'text-red-500';
+    default: return 'text-gray-500';
+  }
+};
 
-  const findNearestLocation = () => {
+const findNearestLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         const userLat = position.coords.latitude;
@@ -141,18 +142,33 @@ const LocationMap = () => {
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-73.9544, 40.6789],
-        zoom: 12
+        zoom: 12,
+        height: '100vh'
       });
 
       mapInstance.on('load', () => {
+        setTimeout(() => {
+          mapInstance.resize();
+        }, 100);
+        
         mapInstance.addControl(new mapboxgl.NavigationControl());
         setMap(mapInstance);
       });
     };
+    const resizeObserver = new ResizeObserver(() => {
+      if (mapInstance) {
+        mapInstance.resize();
+      }
+    });
+
+    resizeObserver.observe(mapContainer.current);
 
     initMap();
 
     return () => {
+      if (resizeObserver) {
+        resizeObserver.disconnect();
+      }
       if (mapInstance) {
         mapInstance.remove();
       }
@@ -210,159 +226,150 @@ const LocationMap = () => {
     };
   }, [map, locations, selectedType]);
 
+/* 3. Visual Layout */
   return (
-    <div className="w-full h-screen flex flex-col">
-      <div className="fixed-header h-[60px] flex items-center justify-center border-b border-[#f2f2f2]">
-        <h1 className="font-inter text-[18px] font-semibold">RECYCLE BABY</h1>
-      </div>
-
+    <>
       {loading ? (
-        <div className="flex-1 flex items-center justify-center">
-          Loading locations...
-        </div>
+        <StatsLoadingScreen />
       ) : (
         <div className="flex-1 relative">
+          <button 
+            className="find-nearest-button absolute top-14 left-12 z-20 bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600"
+            onClick={findNearestLocation}
+          >
+            Find Nearest Location
+          </button>
           <div className="py-2 p-4 bg-white shadow-sm min-h-[40px]">
             <div className="flex flex gap-4 items-center">
-              <button 
-                className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'all' ? 'bg-gray-200' : 'bg-white'}`}
-                onClick={() => {
-                  setSelectedType('all');
-                  setCurrentPage(1);
-                }}
-              >
-                All
-              </button>
-              <button 
-                className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${
-      selectedType === 'bin' ? 'bg-gray-200' : 'bg-white'
-    }`}
-                onClick={() => {
-                  setSelectedType('bin');
-                  setCurrentPage(1);
-                }}
-              >
-                Donation Bins
-              </button>
-              <button 
-                className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'goodwill' ? 'bg-gray-200' : 'bg-white'}`}
-                onClick={() => {
-                  setSelectedType('goodwill');
-                  setCurrentPage(1);
-                }}
-              >
-                Goodwill
-              </button>
-              <button 
-                className={`px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] ${selectedType === 'thrift' ? 'bg-gray-200' : 'bg-white'}`}
-                onClick={() => {
-                  setSelectedType('thrift');
-                  setCurrentPage(1);
-                }}
-              >
-                Thrift Stores
-              </button>
-              <button 
-                className="px-4 py-2 rounded font-inter text-[14px] tracking-[-0.01em] bg-blue-500 text-white hover:bg-blue-600"
-                onClick={findNearestLocation}
-              >
-                Find Nearest Location
-              </button>
-            </div>
-          </div>
-
-          <div className="flex-1 relative">
-            <div className="absolute bottom-4 right-4 z-10 bg-white p-4 rounded shadow-md category-legend">
-              <h3 className="font-heading font-bold mb-2">Category</h3>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                  <MapPin className="text-blue-500" size={16} />
-                  <span>Donation Bins</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="text-green-500" size={16} />
-                  <span>Goodwill</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <MapPin className="text-red-500" size={16} />
-                  <span>Thrift Stores</span>
-                </div>
+              <div className="filter-box">
+                <button 
+                  className={`filter-button ${selectedType === 'all' ? 'active' : ''}`}
+                  onClick={() => {
+                    setSelectedType('all');
+                    setCurrentPage(1);
+                  }}
+                >
+                  All
+                </button>
+                <button 
+                  className={`filter-button ${selectedType === 'bin' ? 'active' : ''}`}
+                  onClick={() => {
+                    setSelectedType('bin');
+                    setCurrentPage(1);
+                  }}
+                >
+                  Donation Bins
+                </button>
+                <button 
+                  className={`filter-button ${selectedType === 'goodwill' ? 'active' : ''}`}
+                  onClick={() => {
+                    setSelectedType('goodwill');
+                    setCurrentPage(1);
+                  }}
+                >
+                  Goodwill
+                </button>
+                <button 
+                  className={`filter-button ${selectedType === 'thrift' ? 'active' : ''}`}
+                  onClick={() => {
+                    setSelectedType('thrift');
+                    setCurrentPage(1);
+                  }}
+                >
+                  Thrift Stores
+                </button>
+              </div>
+              <div className="centered-div">
+                <h2>RECYCLE BABY</h2>
               </div>
             </div>
-
-            <div className="absolute left-4 top-4 z-10 bg-white p-4 rounded shadow-md w-72 location-list">
-              <h3 className="font-bold mb-2">Locations ({filteredLocations.length})</h3>
-              <div className="space-y-3">
-                {currentLocations.map(location => (
-                  <div key={location.id} className="pb-2">
-                    <div className="flex items-start gap-2">
-                      <MapPin className={getMarkerColor(location.type)} size={24} />
-                      <div>
-                        <h4 className="font-semibold">{location.name}</h4>
-                        <p className="font-body text-sm">
-                          {location.address}, {location.city}, {location.state} {location.zip}
-                        </p>
-                        {location.website && (
-                          <a 
-                            href={location.website} 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="text-sm text-blue-500 hover:underline"
-                          >
-                            Website
-                          </a>
-                        )}
-                      </div>
+          </div>
+          <div className="absolute left-8 top-24 z-10 bg-white p-4 rounded shadow-md w-72 location-list">
+            <h3 className="font-bold mb-2">Locations ({filteredLocations.length})</h3>
+            <div className="space-y-3">
+              {currentLocations.map(location => (
+                <div key={location.id} className="pb-2">
+                  <div className="flex items-start gap-2">
+                    <MapPin className={getMarkerColor(location.type)} size={24} />
+                    <div>
+                      <h4 className="font-semibold">{location.name}</h4>
+                      <p className="font-body text-sm">
+                        {location.address}, {location.city}, {location.state} {location.zip}
+                      </p>
+                      {location.website && (
+                        <a 
+                          href={location.website} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="text-sm text-blue-500 hover:underline"
+                        >
+                          Website
+                        </a>
+                      )}
                     </div>
                   </div>
-                ))}
-              </div>
-
-              <div className="mt-4 flex items-center justify-between border-t pt-4">
-                <button
-                  onClick={() => paginate(currentPage - 1)}
-                  disabled={currentPage === 1}
-                  className={`p-2 rounded ${currentPage === 1 ? 'text-gray-400' : 'text-gray-700 hover:bg-gray-100'}`}
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <div className="text-sm">
-                  Page {currentPage} of {totalPages}
                 </div>
-                <button
-                  onClick={() => paginate(currentPage + 1)}
-                  disabled={currentPage === totalPages}
-                  className={`p-2 rounded ${currentPage === totalPages ? 'text-gray-400' : 'text-gray-700 hover:bg-gray-100'}`}
-                >
-                  <ChevronRight size={20} />
-                </button>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center justify-between border-t pt-4">
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`p-2 rounded ${currentPage === 1 ? 'text-gray-400' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <div className="text-sm">
+                Page {currentPage} of {totalPages}
+              </div>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={`p-2 rounded ${currentPage === totalPages ? 'text-gray-400' : 'text-gray-700 hover:bg-gray-100'}`}
+              >
+                <ChevronRight size={20} />
+              </button>
+            </div>
+          </div>
+
+          <div className="absolute bottom-4 right-4 z-10 bg-white p-4 rounded shadow-md category-legend">
+            <h3 className="font-heading font-bold mb-2">Category</h3>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <MapPin className="text-blue-500" size={16} />
+                <span>Donation Bins</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="text-green-500" size={16} />
+                <span>Goodwill</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="text-red-500" size={16} />
+                <span>Thrift Stores</span>
               </div>
             </div>
-
-            {nearestLocation && (
-              <div className="absolute left-4 bottom-4 z-10 bg-white p-4 rounded shadow-md w-72">
-                <h3 className="font-bold mb-2">Nearest Location</h3>
-                <div className="flex items-start gap-2">
-                  <MapPin className={getMarkerColor(nearestLocation.type)} size={24} />
-                  <div>
-                    <h4 className="font-semibold">{nearestLocation.name}</h4>
-                    <p className="text-sm text-gray-600">
-                      {nearestLocation.address}, {nearestLocation.city}, {nearestLocation.state} {nearestLocation.zip}
-                    </p>
-                    <p className="text-sm text-blue-600 mt-1">
-                      {nearestLocation.distance} miles away
-                    </p>
-                  </div>
+          </div>
+          {nearestLocation && (
+            <div className="absolute left-4 bottom-4 z-10 bg-white p-4 rounded shadow-md w-72">
+              <h3 className="font-bold mb-2">Nearest Location</h3>
+              <div className="flex items-start gap-2">
+                <MapPin className={getMarkerColor(nearestLocation.type)} size={24} />
+                <div>
+                  <h4 className="font-semibold">{nearestLocation.name}</h4>
+                  <p className="text-sm text-gray-600">
+                    {nearestLocation.address}, {nearestLocation.city}, {nearestLocation.state} {nearestLocation.zip}
+                  </p>
+                  <p className="text-sm text-blue-600 mt-1">
+                    {nearestLocation.distance} miles away
+                  </p>
                 </div>
               </div>
-            )}
-
-            <div ref={mapContainer} className="w-full h-full map-container" />
-          </div>
+            </div>
+          )}
+          <div ref={mapContainer} className="w-full h-full map-container" />
         </div>
       )}
-    </div>
+    </>
   );
 };
-
 export default LocationMap;

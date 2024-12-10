@@ -10,13 +10,19 @@
 
 body {
   margin: 0;
+  height: 100vh;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
+html{
+  height: 100vh;
+  overflow: hidden;
+}
 /* Add this more specific selector for the header buttons */
 .fixed-header button {
   font-family: 'Inter', sans-serif !important;
