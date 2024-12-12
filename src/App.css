@@ -327,7 +327,7 @@ canvas.mapboxgl-canvas {
   .find-nearest-button-container {
     position: fixed !important; /* Fix the button container to the bottom */
     top: auto;
-    left: 40% !important;
+    left: 50% !important;
     bottom: 80px; /* Space from the bottom */
     transform: translateX(-50%); /* Adjust to center */
     width: 170px; /* Allow width to adjust based on content */

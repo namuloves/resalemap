@@ -75,9 +75,9 @@ const paginate = (pageNumber) => {
 
 const getMarkerColor = (type) => {
   switch(type.toLowerCase()) {
-    case 'bin': return 'text-blue-500';
-    case 'goodwill': return 'text-green-500';
-    case 'thrift': return 'text-red-500';
+    case 'bin': return 'text-green-500';
+    case 'goodwill': return 'text-red-500';
+    case 'thrift': return 'text-blue-500';
     default: return 'text-gray-500';
   }
 };
@@ -187,8 +187,8 @@ const findNearestLocation = () => {
         return;
       }
       const marker = new mapboxgl.Marker({
-        color: location.type.toLowerCase() === 'bin' ? '#3B82F6' : 
-               location.type.toLowerCase() === 'goodwill' ? '#22C55E' : '#EF4444'
+        color: location.type.toLowerCase() === 'bin' ? '#47D300' : 
+               location.type.toLowerCase() === 'goodwill' ? '#E40004' : '#0379FF'
       })
       .setLngLat([location.lng, location.lat])
       .on('click', () => {
