@@ -18,11 +18,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 }
-
-html{
-  height: 100vh;
-  overflow: hidden;
-}
 /* Add this more specific selector for the header buttons */
 .fixed-header button {
   font-family: 'Inter', sans-serif !important;

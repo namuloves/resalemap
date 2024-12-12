@@ -143,7 +143,7 @@ const findNearestLocation = () => {
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [-73.9544, 40.6789],
         zoom: 12,
-        height: '100vh'
+        height: 'window.innerHeight - 60'
       });
 
       mapInstance.on('load', () => {
@@ -233,12 +233,14 @@ const findNearestLocation = () => {
         <StatsLoadingScreen />
       ) : (
         <div className="flex-1 relative">
+          <div className="find-nearest-button-container">
           <button 
-            className="find-nearest-button absolute top-14 left-12 z-20 bg-blue-500 text-white px-4 py-2 rounded shadow-md hover:bg-blue-600"
+            className="find-nearest-button bg-blue-500 text-white px-4 py-2"
             onClick={findNearestLocation}
           >
             Find Nearest Location
           </button>
+          </div>
           <div className="py-2 p-4 bg-white shadow-sm min-h-[40px]">
             <div className="flex flex gap-4 items-center">
               <div className="filter-box">
