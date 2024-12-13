@@ -294,8 +294,8 @@ const findNearestLocation = () => {
                   <div className="flex items-start gap-2">
                     <MapPin className={getMarkerColor(location.type)} size={24} />
                     <div>
-                      <h4 className="font-semibold">{location.name}</h4>
-                      <p className="font-body text-sm">
+                      <h4 className="font-semibold text-sm">{location.name}</h4>
+                      <p className="font-body text-xs">
                         {location.address}, {location.city}, {location.state} {location.zip}
                       </p>
                       {location.website && (
@@ -303,7 +303,7 @@ const findNearestLocation = () => {
                           href={location.website} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          className="text-sm text-blue-500 hover:underline"
+                          className="text-xs text-blue-500 hover:underline"
                         >
                           Website
                         </a>

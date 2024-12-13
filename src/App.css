@@ -279,6 +279,9 @@ h1, h2, h3, h4 {
   font-weight: regular; /* Specify the weight for bold */
   font-style: normal;
 }
+.h4, h4 {
+  font-size: 14px !important;
+}
 
 .find-nearest-button {
   position: relative !important; /* Position it absolutely */
@@ -334,5 +337,27 @@ canvas.mapboxgl-canvas {
     height: auto;
     justify-content: center;
     z-index: 9999;
+  } 
+}
+
+@media screen and (max-width: 600px) {
+  .mapboxgl-ctrl-top-right .mapboxgl-ctrl {
+    margin-top: 120px !important;
   }
+  .filter-box {
+  width: 320px !important;
+}}
+
+.mapboxgl-popup-content {
+  padding: 16px; /* Increase padding around the content */
+}
+
+
+/* Custom styles for Mapbox popup close button */
+.mapboxgl-popup-close-button {
+    padding: 10px; /* Increase padding */
+    margin: -8px; /* Adjust margin if necessary */
+    position: absolute;
+    top: 2px;
+    right: 6px;
 }
